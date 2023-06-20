@@ -25,14 +25,14 @@ public class Main {
         AccountService accountService = new AccountServiceImpl(accountRepository);
         CustomerService customerService = new CustomerServiceImpl(customerRepository);
 
-// Create a new account,customer
+// Created a new account,customer
         Account account1 = new Account(1, "Savings", 1000.0, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         accountService.createAccount(account1);
 
         Customer customer = new Customer(1001,"Aika","Kalil",new ArrayList<>(),null);
         customerService.createCustomer(customer);
 
-        // Get all accounts,customers
+        // Got all accounts,customers
         List<Account> accounts = accountService.getAllAccounts();
         for (Account account : accounts) {
             System.out.println(account);
@@ -43,12 +43,12 @@ public class Main {
             System.out.println(c);
         }
 
-        // Update an account
+        // Updated an account
         Account accountToUpdate = accounts.get(0);
         accountToUpdate.setBalance(2000.0);
         accountService.updateAccount(accountToUpdate);
 
-        // Delete a customer by ID
+        // Deleted a customer by ID
         int customerIdToDelete = 1001;
         customerService.deleteCustomerById(customerIdToDelete);
     }
