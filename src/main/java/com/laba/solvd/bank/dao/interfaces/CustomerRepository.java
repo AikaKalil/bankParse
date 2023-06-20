@@ -1,4 +1,4 @@
-package com.laba.solvd.bank.dao;
+package com.laba.solvd.bank.dao.interfaces;
 
 import com.laba.solvd.bank.model.Customer;
 

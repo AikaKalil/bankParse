@@ -1,6 +1,5 @@
 package com.laba.solvd.bank.service;
 
-import com.laba.solvd.bank.dao.AccountRepository;
 import com.laba.solvd.bank.model.Account;
 
 import java.util.List;

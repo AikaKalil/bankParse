@@ -1,7 +1,8 @@
 package com.laba.solvd.bank.dao.impl;
 
 import com.laba.solvd.bank.dao.ConnectionPool;
-import com.laba.solvd.bank.dao.CustomerRepository;
+import com.laba.solvd.bank.dao.interfaces.CustomerMapper;
+import com.laba.solvd.bank.dao.interfaces.CustomerRepository;
 import com.laba.solvd.bank.model.Customer;
 
 import java.sql.Connection;
@@ -13,9 +14,12 @@ import java.util.List;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
     private final ConnectionPool connectionPool;
+    private final CustomerMapper customerMapper;
 
-    public CustomerRepositoryImpl(ConnectionPool connectionPool) {
+
+    public CustomerRepositoryImpl(ConnectionPool connectionPool, CustomerMapper customerMapper) {
         this.connectionPool = connectionPool;
+        this.customerMapper = customerMapper;
     }
     @Override
     public void create(Customer customer) {
@@ -41,19 +45,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         try {
             String sql = "SELECT * FROM customers";
             PreparedStatement statement = connection.prepareStatement(sql);
-
             ResultSet resultSet = statement.executeQuery();
-
             List<Customer> customers = new ArrayList<>();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String firstName = resultSet.getString("first_name");
-                String lastName = resultSet.getString("last_name");
-
-
-                Customer customer = new Customer(id, firstName, lastName, null, null);
-                customers.add(customer);
-            }
+            customers=customerMapper.mapResultSetToCustomerList(resultSet);
 
             return customers;
         } catch (SQLException e) {

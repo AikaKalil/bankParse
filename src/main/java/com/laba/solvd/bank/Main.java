@@ -1,8 +1,12 @@
 package com.laba.solvd.bank;
 
-import com.laba.solvd.bank.dao.AccountRepository;
+import com.laba.solvd.bank.dao.impl.AccountMapperImpl;
+import com.laba.solvd.bank.dao.impl.CustomerMapperImpl;
+import com.laba.solvd.bank.dao.interfaces.AccountMapper;
+import com.laba.solvd.bank.dao.interfaces.AccountRepository;
 import com.laba.solvd.bank.dao.ConnectionPool;
-import com.laba.solvd.bank.dao.CustomerRepository;
+import com.laba.solvd.bank.dao.interfaces.CustomerMapper;
+import com.laba.solvd.bank.dao.interfaces.CustomerRepository;
 import com.laba.solvd.bank.dao.impl.AccountRepositoryImpl;
 import com.laba.solvd.bank.dao.impl.CustomerRepositoryImpl;
 import com.laba.solvd.bank.model.Account;
@@ -18,9 +22,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-
-        AccountRepository accountRepository = new AccountRepositoryImpl(connectionPool);
-        CustomerRepository customerRepository = new CustomerRepositoryImpl(connectionPool);
+        AccountMapper accountMapper = new AccountMapperImpl();
+        AccountRepository accountRepository = new AccountRepositoryImpl(connectionPool,accountMapper);
+        CustomerMapper customerMapper=new CustomerMapperImpl();
+        CustomerRepository customerRepository = new CustomerRepositoryImpl(connectionPool, customerMapper);
 
         AccountService accountService = new AccountServiceImpl(accountRepository);
         CustomerService customerService = new CustomerServiceImpl(customerRepository);

@@ -1,6 +1,7 @@
 package com.laba.solvd.bank.dao.impl;
 
-import com.laba.solvd.bank.dao.AccountRepository;
+import com.laba.solvd.bank.dao.interfaces.AccountMapper;
+import com.laba.solvd.bank.dao.interfaces.AccountRepository;
 import com.laba.solvd.bank.dao.ConnectionPool;
 import com.laba.solvd.bank.model.Account;
 
@@ -11,10 +12,13 @@ import java.util.List;
 public class AccountRepositoryImpl implements AccountRepository {
     private final ConnectionPool connectionPool;
     private final Connection connection;
+    private final AccountMapper accountMapper;
 
-    public AccountRepositoryImpl(ConnectionPool connectionPool) {
+
+    public AccountRepositoryImpl(ConnectionPool connectionPool, AccountMapper accountMapper) {
         this.connectionPool = connectionPool;
         this.connection = connectionPool.getConnection();
+        this.accountMapper = accountMapper;
     }
 
     @Override
@@ -36,13 +40,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         List<Account> accounts = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts")) {
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String accountType = resultSet.getString("account_type");
-                double balance = resultSet.getDouble("balance");
-                Account account = new Account(id, accountType, balance, null, null, null);
-                accounts.add(account);
-            }
+             accounts = accountMapper.mapResultSetToAccountList(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

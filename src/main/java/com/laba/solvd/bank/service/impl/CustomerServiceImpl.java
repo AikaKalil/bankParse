@@ -1,6 +1,6 @@
 package com.laba.solvd.bank.service.impl;
 
-import com.laba.solvd.bank.dao.CustomerRepository;
+import com.laba.solvd.bank.dao.interfaces.CustomerRepository;
 import com.laba.solvd.bank.model.Customer;
 import com.laba.solvd.bank.service.CustomerService;
 
