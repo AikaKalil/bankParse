@@ -5,29 +5,27 @@ import java.util.Objects;
 
 public class Card {
 
-    private int id;
+    private Long id;
     private String cardNumber;
     private Date expirationDate;
-    private int accountId;
     private CardType cardType;
 
-    public Card(){
+    public Card() {
 
     }
 
-    public Card(int id, String cardNumber, Date expirationDate, int accountId, CardType cardType) {
+    public Card(Long id, String cardNumber, Date expirationDate, CardType cardType) {
         this.id = id;
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
-        this.accountId = accountId;
         this.cardType = cardType;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -45,14 +43,6 @@ public class Card {
 
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
     }
 
     public CardType getCardType() {
@@ -75,12 +65,11 @@ public class Card {
         return id == card.id &&
                 Objects.equals(cardNumber, card.cardNumber) &&
                 Objects.equals(expirationDate, card.expirationDate) &&
-                accountId == card.accountId &&
                 Objects.equals(cardType, card.cardType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cardNumber, expirationDate, accountId, cardType);
+        return Objects.hash(id, cardNumber, expirationDate, cardType);
     }
 }

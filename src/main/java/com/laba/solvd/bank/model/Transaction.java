@@ -4,27 +4,27 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Transaction {
-    private int id;
+    private Long id;
     private String transactionType;
     private double amount;
     private Date transactionDate;
 
-    public Transaction(){
+    public Transaction() {
 
     }
 
-    public Transaction(int id, String transactionType, double amount, Date transactionDate) {
+    public Transaction(Long id, String transactionType, double amount, Date transactionDate) {
         this.id = id;
         this.transactionType = transactionType;
         this.amount = amount;
         this.transactionDate = transactionDate;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,6 +33,7 @@ public class Transaction {
     }
 
     public void setTransactionType(String transactionType) {
+
         this.transactionType = transactionType;
     }
 
@@ -44,8 +45,8 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public Date getTransactionDate() {
-        return transactionDate;
+    public java.sql.Date getTransactionDate() {
+        return (java.sql.Date) transactionDate;
     }
 
     public void setTransactionDate(Date transactionDate) {

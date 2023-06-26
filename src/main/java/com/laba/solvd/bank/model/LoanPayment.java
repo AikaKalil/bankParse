@@ -4,25 +4,26 @@ import java.util.Date;
 import java.util.Objects;
 
 public class LoanPayment {
-    private int id;
+    private Long id;
     private double paymentAmount;
     private Date paymentDate;
 
-    public LoanPayment(){
+    public LoanPayment() {
 
     }
-    public LoanPayment(int id, double paymentAmount, Date paymentDate) {
+
+    public LoanPayment(Long id, double paymentAmount, Date paymentDate) {
         this.id = id;
         this.paymentAmount = paymentAmount;
         this.paymentDate = paymentDate;
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

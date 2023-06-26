@@ -5,26 +5,27 @@ import java.util.Objects;
 
 public class Branch {
 
-    private int id;
+    private Long id;
     private String address;
     private List<Employee> employee;
     private List<ATM> atm;
 
-    public Branch(){
+    public Branch() {
 
     }
-    public Branch(int id, String address, List<Employee> employee, List<ATM> atm) {
+
+    public Branch(Long id, String address, List<Employee> employee, List<ATM> atm) {
         this.id = id;
         this.address = address;
         this.employee = employee;
         this.atm = atm;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -5,16 +5,17 @@ import java.util.Objects;
 
 public class Loan {
 
-    private int id;
+    private Long id;
     private double loanAmount;
     private double interestRate;
     private String loanDuration;
     private List<LoanPayment> loanPayments;
 
-    public Loan(){
+    public Loan() {
 
     }
-    public Loan(int id, double loanAmount, double interestRate, String loanDuration, List<LoanPayment> loanPayments) {
+
+    public Loan(Long id, double loanAmount, double interestRate, String loanDuration, List<LoanPayment> loanPayments) {
         this.id = id;
         this.loanAmount = loanAmount;
         this.interestRate = interestRate;
@@ -22,11 +23,11 @@ public class Loan {
         this.loanPayments = loanPayments;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class Employee {
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private double salary;
-    private Position position;
     private List<Appointment> appointments;
 
-    public Employee(){
+    public Employee() {
 
     }
-    public Employee(int id, String firstName, String lastName, double salary, List<Appointment> appointments) {
+
+    public Employee(Long id, String firstName, String lastName, double salary, List<Appointment> appointments) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,11 +22,11 @@ public class Employee {
         this.appointments = appointments;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

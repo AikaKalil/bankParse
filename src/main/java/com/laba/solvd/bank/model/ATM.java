@@ -1,23 +1,25 @@
 package com.laba.solvd.bank.model;
+
 import java.util.Objects;
 
 public class ATM {
-    private int id;
+    private Long id;
     private String location;
 
-    public ATM(){
+    public ATM() {
 
     }
-    public ATM(int id, String location) {
+
+    public ATM(Long id, String location) {
         this.id = id;
         this.location = location;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -16,15 +16,16 @@ public class ConnectionPool {
     private ConnectionPool() {
         try {
             Class.forName(Config.DRIVER.getValue());
-        }catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException("Couldn't find Driver class", e);
         }
-        int connectionPoolSize=Integer.parseInt(Config.POOL_SIZE.getValue());
-        this.connections=new ArrayList<>(connectionPoolSize);
+        int connectionPoolSize = Integer.parseInt(Config.POOL_SIZE.getValue());
+        this.connections = new ArrayList<>(connectionPoolSize);
         IntStream.range(0, connectionPoolSize)
-                        .boxed()
-                                .forEach(index->connections.add(createConnection()));
+                .boxed()
+                .forEach(index -> connections.add(createConnection()));
     }
+
     private Connection createConnection() {
         Connection connection;
         try {
@@ -63,6 +64,6 @@ public class ConnectionPool {
             instance = new ConnectionPool();
         }
         return instance;
-}
+    }
 
 }

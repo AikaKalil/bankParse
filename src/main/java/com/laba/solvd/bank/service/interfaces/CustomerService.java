@@ -1,11 +1,10 @@
-package com.laba.solvd.bank.service;
+package com.laba.solvd.bank.service.interfaces;
 
 import com.laba.solvd.bank.model.Customer;
 
 import java.util.List;
 
 public interface CustomerService {
-    void createCustomer(Customer customer);
+    Customer createCustomer(Customer customer);
     List<Customer> getAllCustomers();
-    void deleteCustomerById(int id);
 }

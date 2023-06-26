@@ -5,17 +5,18 @@ import java.util.Objects;
 
 public class Account {
 
-    private int id;
+    private Long id;
     private String accountType;
     private double balance;
     private List<Transaction> transaction;
     private List<Card> card;
     private List<Loan> loan;
 
-    public Account(){
+    public Account() {
 
     }
-    public Account(int id, String accountType, double balance, List<Transaction> transaction, List<Card> card, List<Loan> loan) {
+
+    public Account(Long id, String accountType, double balance, List<Transaction> transaction, List<Card> card, List<Loan> loan) {
         this.id = id;
         this.accountType = accountType;
         this.balance = balance;
@@ -24,11 +25,11 @@ public class Account {
         this.loan = loan;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -92,7 +93,7 @@ public class Account {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accountType, balance, transaction, card, loan);
+        return Objects.hash("Department{"+"id="+id,"\nAccount type="+accountType,"\nBalance"+ balance,"\nTransaction="+transaction,"\nCard"+card,"\nLoan="+loan);
     }
 
-    }
+}

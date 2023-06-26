@@ -4,27 +4,29 @@ import java.util.List;
 import java.util.Objects;
 
 public class Customer {
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private List<Account> account;
     private List<Appointment> appointment;
 
-    public Customer(){
+    public Customer() {
 
     }
-    public Customer(int id, String firstName, String lastName, List<Account> account, List<Appointment> appointment) {
+
+    public Customer(Long id, String firstName, String lastName, List<Account> account, List<Appointment> appointment) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.account = account;
         this.appointment = appointment;
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

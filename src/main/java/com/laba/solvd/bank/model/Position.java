@@ -1,25 +1,26 @@
 package com.laba.solvd.bank.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
-    private int id;
+    private Long id;
     private String positionName;
-
-    public Position(){
+    private List<Employee> employee;
+    public Position() {
 
     }
-
-    public Position(int id, String positionName) {
+    public Position(Long id, String positionName, List<Employee> employee) {
         this.id = id;
         this.positionName = positionName;
-
+        this.employee = employee;
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -30,7 +31,12 @@ public class Position {
     public void setPositionName(String positionName) {
         this.positionName = positionName;
     }
-
+    public List<Employee> getEmployee() {
+        return employee;
+    }
+    public void setEmployee(List<Employee> employee) {
+        this.employee = employee;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) {

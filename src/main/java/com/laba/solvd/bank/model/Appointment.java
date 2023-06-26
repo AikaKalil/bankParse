@@ -4,23 +4,23 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Appointment {
-    private int id;
+    private Long id;
     private Date dateTime;
 
-    public Appointment(){
+    public Appointment() {
 
     }
 
-    public Appointment(int id, Date dateTime) {
+    public Appointment(Long id, Date dateTime) {
         this.id = id;
         this.dateTime = dateTime;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,76 +1,81 @@
 package com.laba.solvd.bank.dao.impl;
 
 import com.laba.solvd.bank.dao.ConnectionPool;
-import com.laba.solvd.bank.dao.interfaces.CustomerMapper;
 import com.laba.solvd.bank.dao.interfaces.CustomerRepository;
+import com.laba.solvd.bank.model.Account;
 import com.laba.solvd.bank.model.Customer;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CustomerRepositoryImpl implements CustomerRepository {
-    private final ConnectionPool connectionPool;
-    private final CustomerMapper customerMapper;
+    private final ConnectionPool CONNECTION_POOL=ConnectionPool.getInstance();
+    Logger logger = Logger.getLogger(CustomerRepositoryImpl.class.getName());
+    private final String sqlCustomer="SELECT c.id as customer_id, c.first_name as first_name,c.last_name as last_name, a.id as account_id, a.account_type as account_type, a.balance as balance, a.date_opened as date_opened\n" +
+            "FROM customers c\n" +
+            "LEFT JOIN accounts a ON c.id = a.customer_id;";
 
-
-    public CustomerRepositoryImpl(ConnectionPool connectionPool, CustomerMapper customerMapper) {
-        this.connectionPool = connectionPool;
-        this.customerMapper = customerMapper;
-    }
     @Override
     public void create(Customer customer) {
-        Connection connection = connectionPool.getConnection();
-        try {
-            String sql = "INSERT INTO customers (id, firstName, lastName) VALUES (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, customer.getId());
-            statement.setString(2, customer.getFirstName());
-            statement.setString(3, customer.getLastName());
-
-            statement.executeUpdate();
+        Connection connection = CONNECTION_POOL.getConnection();
+        try(PreparedStatement prepareStatement= connection.prepareStatement("INSERT INTO customers (firstName, lastName) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)){
+            prepareStatement.setString(2, customer.getFirstName());
+            prepareStatement.setString(3, customer.getLastName());
+            prepareStatement.executeUpdate();
+            ResultSet resultSet=prepareStatement.getGeneratedKeys();
+            while(resultSet.next()){
+                customer.setId(resultSet.getLong("id"));
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to create customer", e);
+            logger.info("Failed to create customer", e);
         } finally {
-            connectionPool.releaseConnection(connection);
+            CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
     @Override
     public List<Customer> findAll() {
-        Connection connection = connectionPool.getConnection();
+        Connection connection = CONNECTION_POOL.getConnection();
+        List<Customer>customers=null;
         try {
-            String sql = "SELECT * FROM customers";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
-            List<Customer> customers = new ArrayList<>();
-            customers=customerMapper.mapResultSetToCustomerList(resultSet);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlCustomer);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            customers =mapCustomers(resultSet);
 
-            return customers;
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve customers", e);
+            logger.info("Failed to retrieve customers", e);
         } finally {
-            connectionPool.releaseConnection(connection);
+            CONNECTION_POOL.releaseConnection(connection);
         }
+        return customers;
     }
 
-    @Override
-    public void deleteById(int id) {
-        Connection connection = connectionPool.getConnection();
-        try {
+    private static Customer findById(Long id, List<Customer> customers) {
+        return customers.stream()
+                .filter(customer -> customer.getId().equals(id))
+                .findFirst()
+                .orElseGet(() -> {
+                    Customer createdDepartment = new Customer();
+                    createdDepartment.setId(id);
+                    customers.add(createdDepartment);
+                    return createdDepartment;
+                });
+    }
 
-            String sql = "DELETE FROM customers WHERE id = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
 
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to delete customer", e);
-        } finally {
-            connectionPool.releaseConnection(connection);
+    private static List<Customer>mapCustomers(ResultSet resultSet)throws SQLException{
+        List<Customer> customers=new ArrayList<>();
+        while(resultSet.next()){
+            Long id=resultSet.getLong("id");
+            Customer customer=findById(id,customers);
+            customer.setFirstName("first_name");
+            customer.setLastName("last_name");
+            List<Account> accounts=AccountRepositoryImpl.mapRow(resultSet,customer.getAccount());
+            customer.setAccount(accounts);
         }
+        return customers;
     }
-    }
+}
