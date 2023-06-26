@@ -63,10 +63,5 @@ public class Main {
         customer.setLastName("Meyer");
         customer.setAccount(Arrays.asList(account1,account2));
 
-        CustomerService customerService=new CustomerServiceImpl();
-        customer=customerService.createCustomer(customer);
-        logger.info(customer);
-       List<Customer> allCustomers=customerService.getAllCustomers();
-       logger.info(allCustomers);
     }
 }
