@@ -8,6 +8,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private List<Account> account;
+
     private List<Appointment> appointment;
 
     public Customer() {

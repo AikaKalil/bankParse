@@ -1,5 +1,8 @@
 {
-  "bank": {
+  "customer": {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
     "account": [
       {
         "id": 1,
@@ -8,38 +11,38 @@
         "transaction": [
           {
             "id": 1,
-            "type": "Deposit",
-            "amount": 500.0
+            "transactionType": "Deposit",
+            "amount": 500.0,
+            "transactionDate": "2022-01-01T10:00:00Z"
           },
           {
             "id": 2,
-            "type": "Withdrawal",
-            "amount": 200.0
+            "transactionType": "Withdrawal",
+            "amount": 200.0,
+            "transactionDate": "2022-02-01T14:30:00Z"
           }
         ],
         "card": [
           {
             "id": 1,
             "cardNumber": "1234567890",
-            "expirationDate": "2027-12-22",
+            "expirationDate": "2023-12-31T23:59:59Z",
             "cardType": {
               "id": 1,
               "credit": "MasterCard",
               "debit": "Debit"
             }
           }
+        ],
+        "loan": [
+          {
+            "id": 1,
+            "loanAmount": 5000.0,
+            "loanType": "Personal Loan"
+          }
         ]
-      }
-    ],
-    "customer": [
-      {
-        "id": 1,
-        "firstName": "Aisha",
-        "lastName": "Murat",
-        "account": {
-          "id": 1
-        }
       }
     ]
   }
 }
+
