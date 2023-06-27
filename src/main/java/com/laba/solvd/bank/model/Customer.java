@@ -14,12 +14,9 @@ public class Customer {
 
     }
 
-    public Customer(Long id, String firstName, String lastName, List<Account> account, List<Appointment> appointment) {
-        this.id = id;
+    public Customer( String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.account = account;
-        this.appointment = appointment;
     }
 
     public Long getId() {

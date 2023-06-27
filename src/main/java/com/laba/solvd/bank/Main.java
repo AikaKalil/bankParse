@@ -2,22 +2,21 @@ package com.laba.solvd.bank;
 
 import com.laba.solvd.bank.dao.impl.AccountRepositoryImpl;
 import com.laba.solvd.bank.dao.impl.CustomerRepositoryImpl;
+import com.laba.solvd.bank.dao.impl.TransactionRepositoryImpl;
 import com.laba.solvd.bank.dao.interfaces.AccountRepository;
 import com.laba.solvd.bank.dao.interfaces.CustomerRepository;
+import com.laba.solvd.bank.dao.interfaces.TransactionRepository;
 import com.laba.solvd.bank.model.Account;
 import com.laba.solvd.bank.model.Customer;
 import com.laba.solvd.bank.model.Transaction;
 import com.laba.solvd.bank.service.impl.AccountServiceImpl;
 import com.laba.solvd.bank.service.impl.CustomerServiceImpl;
+import com.laba.solvd.bank.service.impl.TransactionServiceImpl;
 import com.laba.solvd.bank.service.interfaces.AccountService;
 import com.laba.solvd.bank.service.interfaces.CustomerService;
+import com.laba.solvd.bank.service.interfaces.TransactionService;
 import org.apache.log4j.Logger;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import java.util.Arrays;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,43 +24,47 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = Logger.getLogger(Main.class.getName());
 
-        Transaction transaction1=new Transaction();
-        transaction1.setTransactionType("deposit");
-        transaction1.setAmount(12000);
-        String transactionDateStr1="05/05/2023";
-        SimpleDateFormat dateFormat1=new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            Date transactionDate=dateFormat1.parse(transactionDateStr1);
-            transaction1.setTransactionDate(transactionDate);
-        }catch(ParseException e){
-            logger.info(("Unable to set the date"),e);
+
+        AccountRepository accountRepository = new AccountRepositoryImpl();
+        CustomerRepository customerRepository = new CustomerRepositoryImpl();
+        TransactionRepository transactionRepository = new TransactionRepositoryImpl();
+
+        TransactionService transactionService = new TransactionServiceImpl(transactionRepository);
+        AccountService accountService = new AccountServiceImpl(accountRepository, transactionService);
+        CustomerService customerService = new CustomerServiceImpl(customerRepository, accountService);
+
+        Customer customer1 = new Customer("Ashley", "Connor");
+        Customer customer2 = new Customer("Emily", "Meyer");
+
+        Account account1 = new Account("Savings", 1000.0);
+        Account account2 = new Account("Checking", 100000);
+
+        Transaction transaction1 = new Transaction("Deposit", 500.0);
+        Transaction transaction2 = new Transaction("Withdrawal", 6500.0);
+
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(transaction1);
+        transactions.add(transaction2);
+        List<Account> accounts=new ArrayList<>();
+        accounts.add(account1);
+        accounts.add(account2);
+
+        account1.setTransaction(transactions);
+        customer1.setAccount(accounts);
+        customerService.createCustomer(customer1);
+
+        List<Customer> customerList = customerService.getAllCustomers();
+        List<Account> accountList = accountService.getAllAccounts();
+
+        // Displaying the retrieved customers and accounts
+        for (Customer c : customerList) {
+            logger.info("Customer: " + c.getFirstName() + " " + c.getLastName());
+            for (Account a : c.getAccount()) {
+                logger.info("Account: " + a.getAccountType() + ", Balance: " + a.getBalance());
+                for (Transaction t : a.getTransaction()) {
+                    logger.info("Transaction: " + t.getTransactionType() + ", Amount: " + t.getAmount());
+                }
+            }
         }
-        Transaction transaction2=new Transaction();
-        transaction2.setTransactionType("withdrawal");
-        transaction2.setAmount(3000);
-        String transactionDateStr2="07/08/2023";
-        SimpleDateFormat dateFormat2=new SimpleDateFormat("dd/MM/yyyy");
-        try{
-            Date transactionDate2=dateFormat2.parse(transactionDateStr2);
-            transaction2.setTransactionDate(transactionDate2);
-        }catch(ParseException e){
-            logger.info(("Unable to set the date"),e);
-        }
-        Account account1=new Account();
-        account1.setAccountType("debit");
-        account1.setBalance(20000.0);
-        account1.setTransaction(Arrays.asList(transaction1));
-
-        Account account2=new Account();
-        account2.setAccountType("debit");
-        account2.setBalance(50000.0);
-        account2.setTransaction(Arrays.asList(transaction1,transaction2));
-
-
-        Customer customer=new Customer();
-        customer.setFirstName("Emily");
-        customer.setLastName("Meyer");
-        customer.setAccount(Arrays.asList(account1,account2));
-
     }
 }

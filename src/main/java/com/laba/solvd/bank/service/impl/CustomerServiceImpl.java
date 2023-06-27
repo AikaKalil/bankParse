@@ -12,18 +12,12 @@ import java.util.stream.Collectors;
 
 public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
-    private AccountRepository accountRepository;
     private AccountService accountService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, AccountRepository accountRepository, AccountService accountService) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, AccountService accountService) {
         this.customerRepository = customerRepository;
-        this.accountRepository = accountRepository;
         this.accountService = accountService;
     }
-    public CustomerServiceImpl() {
-
-    }
-
     @Override
     public Customer createCustomer(Customer customer) {
         customer.setId(null);
@@ -32,9 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
             List<Account> accounts = customer.getAccount().stream()
                     .map(account -> accountService.createAccount(account))
                     .collect(Collectors.toList());
-            for (Account account : accounts) {
-                accountRepository.update(account,customer);
-            }
+
+            customer.setAccount(accounts);
         }
         return customer;
     }

@@ -8,6 +8,6 @@ import java.util.List;
 public interface AccountRepository {
     void create(Account account);
     List<Account> findAll();
-    void update(Account account, Customer customer);
+    void update(Account account);
 
 }

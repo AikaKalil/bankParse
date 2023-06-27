@@ -24,9 +24,10 @@ public class AccountRepositoryImpl implements AccountRepository {
             statement.setDouble(2, account.getBalance());
             statement.executeUpdate();
 
-            ResultSet resultSet=statement.getGeneratedKeys();
-            while(resultSet.next()){
-                account.setId((resultSet.getLong("id")));
+            try(ResultSet resultSet=statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    account.setId((resultSet.getLong(1)));
+                }
             }
         } catch (SQLException e) {
             logger.info("Unable to execute statement",e);
@@ -53,17 +54,16 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public void update(Account account, Customer customer) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE accounts SET account_type = ?, balance = ? WHERE id = ?")) {
+    public void update(Account account) {
+        String sql = "UPDATE accounts SET account_type = ?, balance = ? WHERE id = ?";
+        try (Connection connection = CONNECTION_POOL.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, account.getAccountType());
             statement.setDouble(2, account.getBalance());
             statement.setLong(3, account.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.info("Unable to update!",e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
+            logger.error("Unable to update!", e);
         }
     }
 

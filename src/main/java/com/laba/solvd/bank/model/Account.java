@@ -16,13 +16,9 @@ public class Account {
 
     }
 
-    public Account(Long id, String accountType, double balance, List<Transaction> transaction, List<Card> card, List<Loan> loan) {
-        this.id = id;
+    public Account( String accountType, double balance) {
         this.accountType = accountType;
         this.balance = balance;
-        this.transaction = transaction;
-        this.card = card;
-        this.loan = loan;
     }
 
     public Long getId() {

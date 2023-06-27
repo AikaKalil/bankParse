@@ -13,15 +13,11 @@ import java.util.stream.Collectors;
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
-    private TransactionRepository transactionRepository;
-    private TransactionService transactionService;
-    public AccountServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository, TransactionService transactionService) {
-        this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
-        this.transactionService = transactionService;
-    }
-    public AccountServiceImpl() {
 
+    private TransactionService transactionService;
+    public AccountServiceImpl(AccountRepository accountRepository, TransactionService transactionService) {
+        this.accountRepository = accountRepository;
+        this.transactionService = transactionService;
     }
 
 
@@ -32,9 +28,8 @@ public class AccountServiceImpl implements AccountService {
             List<Transaction> transactions = account.getTransaction().stream().
                     map(transaction -> transactionService.createTransaction(transaction))
                     .collect(Collectors.toList());
-            for(Transaction transaction : transactions){
-            transactionRepository.update(transaction, account);
-        }
+
+            account.setTransaction(transactions);
     }
         return account;
     }

@@ -13,11 +13,9 @@ public class Transaction {
 
     }
 
-    public Transaction(Long id, String transactionType, double amount, Date transactionDate) {
-        this.id = id;
+    public Transaction(String transactionType, double amount) {
         this.transactionType = transactionType;
         this.amount = amount;
-        this.transactionDate = transactionDate;
     }
 
     public Long getId() {

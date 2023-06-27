@@ -63,15 +63,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 }
 
     @Override
-    public void update(Transaction transaction, Account account) {
-        Connection connection = CONNECTION_POOL.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE transactions SET amount = 2000.00 WHERE id = 1;")) {
-            statement.setDouble(2,transaction.getAmount());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.info("Unable to update!",e);
-        } finally {
-            CONNECTION_POOL.releaseConnection(connection);
+    public void update(Transaction transaction) {
+        String sql = "UPDATE transactions SET amount = ? WHERE id = ?";
+        try (Connection connection = CONNECTION_POOL.getConnection();
+           PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setDouble(1, transaction.getAmount());
+                statement.setLong(2, transaction.getId());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+            logger.error("Unable to update the transaction!", e);
         }
     }
 

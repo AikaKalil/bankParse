@@ -8,5 +8,5 @@ import java.util.List;
 public interface TransactionRepository {
     void create(Transaction transaction);
     List<Transaction> findAll();
-    void update(Transaction transaction, Account account);
+    void update(Transaction transaction);
 }
