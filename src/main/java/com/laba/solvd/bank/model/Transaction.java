@@ -1,12 +1,31 @@
 package com.laba.solvd.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.laba.solvd.bank.parsers.DateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
+    @XmlAttribute
     private Long id;
+    @XmlElement
+    @JsonProperty("transactionType")
     private String transactionType;
+    @XmlElement
     private double amount;
+    @JsonProperty("transactionDate")
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @XmlAttribute
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date transactionDate;
 
     public Transaction() {
@@ -43,8 +62,8 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public java.sql.Date getTransactionDate() {
-        return (java.sql.Date) transactionDate;
+    public Date getTransactionDate() {
+        return transactionDate;
     }
 
     public void setTransactionDate(Date transactionDate) {

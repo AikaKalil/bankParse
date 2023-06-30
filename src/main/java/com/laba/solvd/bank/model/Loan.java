@@ -1,26 +1,32 @@
 package com.laba.solvd.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Loan {
-
+    @XmlAttribute
     private Long id;
+    @XmlElement
     private double loanAmount;
+    @XmlElement
     private double interestRate;
+    @XmlElement
     private String loanDuration;
-    private List<LoanPayment> loanPayments;
 
     public Loan() {
 
     }
 
-    public Loan(Long id, double loanAmount, double interestRate, String loanDuration, List<LoanPayment> loanPayments) {
+    public Loan(Long id, double loanAmount, double interestRate, String loanDuration) {
         this.id = id;
         this.loanAmount = loanAmount;
         this.interestRate = interestRate;
         this.loanDuration = loanDuration;
-        this.loanPayments = loanPayments;
     }
 
     public Long getId() {
@@ -55,14 +61,6 @@ public class Loan {
         this.loanDuration = loanDuration;
     }
 
-    public List<LoanPayment> getLoanPayments() {
-        return loanPayments;
-    }
-
-    public void setLoanPayments(List<LoanPayment> loanPayments) {
-        this.loanPayments = loanPayments;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -75,12 +73,11 @@ public class Loan {
         return id == loan.id &&
                 Double.compare(loan.loanAmount, loanAmount) == 0 &&
                 Double.compare(loan.interestRate, interestRate) == 0 &&
-                Objects.equals(loanDuration, loan.loanDuration) &&
-                Objects.equals(loanPayments, loan.loanPayments);
+                Objects.equals(loanDuration, loan.loanDuration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loanAmount, interestRate, loanDuration, loanPayments);
+        return Objects.hash(id, loanAmount, interestRate, loanDuration);
     }
 }

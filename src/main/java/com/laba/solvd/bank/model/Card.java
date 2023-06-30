@@ -1,13 +1,31 @@
 package com.laba.solvd.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.laba.solvd.bank.parsers.DateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
-
+    @XmlAttribute
     private Long id;
+    @XmlElement
     private String cardNumber;
+    @JsonProperty("expirationDate")
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @XmlAttribute
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date expirationDate;
+    @JsonProperty("cardType")
+    @XmlElement
     private CardType cardType;
 
     public Card() {
@@ -40,7 +58,6 @@ public class Card {
     public Date getExpirationDate() {
         return expirationDate;
     }
-
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }

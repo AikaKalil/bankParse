@@ -24,14 +24,15 @@
             <expirationDate>2023-12-31T23:59:59Z</expirationDate>
             <cardType>
                 <id>1</id>
-                <credit>MasterCard</credit>
-                <debit>Debit</debit>
+                <credit>Visa</credit>
+                <debit>Visa</debit>
             </cardType>
         </card>
         <loan>
             <id>1</id>
             <loanAmount>5000.0</loanAmount>
-            <loanType>Personal Loan</loanType>
+            <interestRate>22.4</interestRate>
+            <loanDuration>12 Month</loanDuration>
         </loan>
     </account>
 </customer>

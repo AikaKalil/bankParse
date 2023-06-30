@@ -1,5 +1,9 @@
 package com.laba.solvd.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +12,9 @@ public class Employee {
     private String firstName;
     private String lastName;
     private double salary;
+    @JsonProperty("appointment")
+    @XmlElementWrapper(name = "appointments")
+    @XmlElement(name = "appointment")
     private List<Appointment> appointments;
 
     public Employee() {

@@ -44,7 +44,8 @@
                                     <xs:sequence>
                                         <xs:element name="id" type="xs:long"/>
                                         <xs:element name="loanAmount" type="xs:double"/>
-                                        <xs:element name="loanType" type="xs:string"/>
+                                        <xs:element name="interestRate" type="xs:double"/>
+                                        <xs:element name="loanDuration" type="xs:string"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>

@@ -1,15 +1,31 @@
 package com.laba.solvd.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
-
+    @XmlAttribute
     private Long id;
+    @XmlElement
+    @JsonProperty("accountType")
     private String accountType;
+    @XmlElement
     private double balance;
+    @JsonProperty("transaction")
+    @XmlElementWrapper(name = "transactions")
+    @XmlElement(name = "transaction")
     private List<Transaction> transaction;
+    @JsonProperty("card")
+    @XmlElementWrapper(name = "cards")
+    @XmlElement(name = "card")
     private List<Card> card;
+    @JsonProperty("loan")
+    @XmlElementWrapper(name = "loans")
+    @XmlElement(name = "loan")
     private List<Loan> loan;
 
     public Account() {

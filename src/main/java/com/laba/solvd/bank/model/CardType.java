@@ -1,7 +1,9 @@
 package com.laba.solvd.bank.model;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Objects;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CardType {
     private Long id;
     private String credit;
