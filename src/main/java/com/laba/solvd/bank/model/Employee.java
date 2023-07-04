@@ -12,7 +12,7 @@ public class Employee {
     private String firstName;
     private String lastName;
     private double salary;
-    @JsonProperty("appointment")
+    @JsonProperty("appointments")
     @XmlElementWrapper(name = "appointments")
     @XmlElement(name = "appointment")
     private List<Appointment> appointments;

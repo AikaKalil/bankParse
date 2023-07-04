@@ -1,42 +1,35 @@
 package com.laba.solvd.bank.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.laba.solvd.bank.parsers.DateAdapter;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement(name = "card")
 public class Card {
-    @XmlAttribute
+    @JsonProperty("id")
+    @XmlAttribute(name = "id")
     private Long id;
+    @JsonProperty("cardNumber")
     @XmlElement
     private String cardNumber;
     @JsonProperty("expirationDate")
-    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    @XmlAttribute
+    @XmlElement(name = "expirationDate")
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date expirationDate;
+    @XmlElement(name = "cardType")
     @JsonProperty("cardType")
-    @XmlElement
     private CardType cardType;
 
     public Card() {
 
     }
 
-    public Card(Long id, String cardNumber, Date expirationDate, CardType cardType) {
-        this.id = id;
+    public Card(String cardNumber, Date expirationDate) {
         this.cardNumber = cardNumber;
         this.expirationDate = expirationDate;
-        this.cardType = cardType;
     }
 
     public Long getId() {
@@ -58,6 +51,7 @@ public class Card {
     public Date getExpirationDate() {
         return expirationDate;
     }
+
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }

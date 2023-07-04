@@ -2,23 +2,17 @@ package com.laba.solvd.bank.parsers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.laba.solvd.bank.model.*;
-
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 public class JacksonParser implements Parser {
-
-
     @Override
     public Customer parse(String filePath) {
         Customer customer = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
             File jsonFile = new File(filePath);
-
             customer = mapper.readValue(jsonFile, Customer.class);
 
             System.out.println("Customer ID: " + customer.getId());
@@ -26,6 +20,7 @@ public class JacksonParser implements Parser {
             System.out.println("Last Name: " + customer.getLastName());
 
             List<Account> accounts = customer.getAccount();
+
             for (Account account : accounts) {
                 System.out.println("Account ID: " + account.getId());
                 System.out.println("Account Type: " + account.getAccountType());

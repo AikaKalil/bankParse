@@ -7,26 +7,27 @@ import java.util.List;
 import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement(name = "account")
 public class Account {
-    @XmlAttribute
+    @XmlAttribute(name="id")
     private Long id;
     @XmlElement
     @JsonProperty("accountType")
     private String accountType;
     @XmlElement
     private double balance;
-    @JsonProperty("transaction")
+    @JsonProperty("transactions")
     @XmlElementWrapper(name = "transactions")
     @XmlElement(name = "transaction")
-    private List<Transaction> transaction;
-    @JsonProperty("card")
+    private List<Transaction> transactions;
+    @JsonProperty("cards")
     @XmlElementWrapper(name = "cards")
     @XmlElement(name = "card")
-    private List<Card> card;
-    @JsonProperty("loan")
+    private List<Card> cards;
+    @JsonProperty("loans")
     @XmlElementWrapper(name = "loans")
     @XmlElement(name = "loan")
-    private List<Loan> loan;
+    private List<Loan> loans;
 
     public Account() {
 
@@ -62,27 +63,27 @@ public class Account {
     }
 
     public List<Transaction> getTransaction() {
-        return transaction;
+        return transactions;
     }
 
-    public void setTransaction(List<Transaction> transaction) {
-        this.transaction = transaction;
+    public void setTransaction(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public List<Card> getCard() {
-        return card;
+        return cards;
     }
 
-    public void setCard(List<Card> card) {
-        this.card = card;
+    public void setCard(List<Card> cards) {
+        this.cards = cards;
     }
 
     public List<Loan> getLoan() {
-        return loan;
+        return loans;
     }
 
-    public void setLoan(List<Loan> loan) {
-        this.loan = loan;
+    public void setLoan(List<Loan> loans) {
+        this.loans = loans;
     }
 
 
@@ -98,14 +99,14 @@ public class Account {
         return id == account.id &&
                 Double.compare(account.balance, balance) == 0 &&
                 Objects.equals(accountType, account.accountType) &&
-                Objects.equals(transaction, account.transaction) &&
-                Objects.equals(card, account.card) &&
-                Objects.equals(loan, account.loan);
+                Objects.equals(transactions, account.transactions) &&
+                Objects.equals(cards, account.cards) &&
+                Objects.equals(loans, account.loans);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash("Department{"+"id="+id,"\nAccount type="+accountType,"\nBalance"+ balance,"\nTransaction="+transaction,"\nCard"+card,"\nLoan="+loan);
+        return Objects.hash("Department{"+"id="+id,"\nAccount type="+accountType,"\nBalance"+ balance,"\nTransaction="+transactions,"\nCard"+cards,"\nLoan="+loans);
     }
 
 }

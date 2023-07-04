@@ -1,58 +1,66 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:element name="customer">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="id" type="xs:long"/>
-                <xs:element name="firstName" type="xs:string"/>
-                <xs:element name="lastName" type="xs:string"/>
-                <xs:element name="account">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="id" type="xs:long"/>
-                            <xs:element name="accountType" type="xs:string"/>
-                            <xs:element name="balance" type="xs:double"/>
-                            <xs:element name="transaction" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="id" type="xs:long"/>
-                                        <xs:element name="transactionType" type="xs:string"/>
-                                        <xs:element name="amount" type="xs:double"/>
-                                        <xs:element name="transactionDate" type="xs:dateTime"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="card">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="id" type="xs:long"/>
-                                        <xs:element name="cardNumber" type="xs:string"/>
-                                        <xs:element name="expirationDate" type="xs:dateTime"/>
-                                        <xs:element name="cardType">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="id" type="xs:long"/>
-                                                    <xs:element name="credit" type="xs:string"/>
-                                                    <xs:element name="debit" type="xs:string"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="loan" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="id" type="xs:long"/>
-                                        <xs:element name="loanAmount" type="xs:double"/>
-                                        <xs:element name="interestRate" type="xs:double"/>
-                                        <xs:element name="loanDuration" type="xs:string"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-</xs:schema>
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:complexType name="TransactionType">
+        <xsd:sequence>
+            <xsd:element name="transactionType" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+            <xsd:element name="transactionDate" type="xsd:dateTime"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CardType">
+        <xsd:sequence>
+            <xsd:element name="credit" type="xsd:string"/>
+            <xsd:element name="debit" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Card">
+        <xsd:sequence>
+            <xsd:element name="cardNumber" type="xsd:string"/>
+            <xsd:element name="expirationDate" type="xsd:dateTime"/>
+            <xsd:element name="cardType" type="CardType"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Loan">
+        <xsd:sequence>
+            <xsd:element name="loanAmount" type="xsd:decimal"/>
+            <xsd:element name="interestRate" type="xsd:decimal"/>
+            <xsd:element name="loanDuration" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Account">
+        <xsd:sequence>
+            <xsd:element name="accountType" type="xsd:string"/>
+            <xsd:element name="balance" type="xsd:decimal"/>
+            <xsd:element name="transactions" type="xsd:anyType"/>
+            <xsd:element name="cards" type="xsd:anyType"/>
+            <xsd:element name="loans" type="xsd:anyType"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Accounts">
+        <xsd:sequence>
+            <xsd:element name="account" type="Account"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Customer">
+        <xsd:sequence>
+            <xsd:element name="firstName" type="xsd:string"/>
+            <xsd:element name="lastName" type="xsd:string"/>
+            <xsd:element name="accounts" type="Accounts"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:element name="customer" type="Customer"/>
+
+</xsd:schema>

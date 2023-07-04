@@ -1,5 +1,4 @@
 {
-  "customer": {
     "id": 1,
     "firstName": "Aisha",
     "lastName": "Murat",
@@ -45,5 +44,4 @@
       }
     ]
   }
-}
 

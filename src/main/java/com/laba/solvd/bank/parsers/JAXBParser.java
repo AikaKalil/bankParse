@@ -1,23 +1,22 @@
 package com.laba.solvd.bank.parsers;
-
 import com.laba.solvd.bank.model.*;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Unmarshaller;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import org.apache.log4j.Logger;
 import java.io.File;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class JAXBParser implements Parser{
     public static Logger logger = Logger.getLogger(JAXBParser.class.getName());
     public Customer parse(String xmlFilePath) {
         Customer customer = null;
+
         try {
+            File xmlFile = new File(xmlFilePath);
             JAXBContext jaxbContext = JAXBContext.newInstance(Customer.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            File xmlFile = new File(xmlFilePath);
+
             customer = (Customer) unmarshaller.unmarshal(xmlFile);
 
             logger.info("Customer ID: " + customer.getId());
@@ -26,51 +25,34 @@ public class JAXBParser implements Parser{
 
             List<Account> accounts = customer.getAccount();
             for (Account account : accounts) {
-                Long accountId = account.getId();
-                String accountType = account.getAccountType();
-                Double balance = account.getBalance();
-
-                logger.info("Account ID: " + accountId);
-                logger.info("Account Type: " + accountType);
-                logger.info("Balance: " + balance);
+                logger.info("Account ID: " + account.getId());
+                logger.info("Account Type: " + account.getAccountType());
+                logger.info("Balance: " + account.getBalance());
 
                 List<Transaction> transactions = account.getTransaction();
-                List<Card> cards = account.getCard();
-                List<Loan> loans = account.getLoan();
-
                 for (Transaction transaction : transactions) {
                     logger.info("Transaction ID: " + transaction.getId());
                     logger.info("Transaction Type: " + transaction.getTransactionType());
                     logger.info("Amount: " + transaction.getAmount());
                     logger.info("Transaction Date: " + transaction.getTransactionDate());
                 }
-
+                List<Card> cards = account.getCard();
                 for (Card card : cards) {
-                    Long cardId = card.getId();
-                    String cardNumber = card.getCardNumber();
-                    Date expirationDate = card.getExpirationDate();
-
-                    logger.info("Card ID: " + cardId);
-                    logger.info("Card Number: " + cardNumber);
-                    logger.info("Expiration Date: " + expirationDate);
+                    logger.info("Card ID: " + card.getId());
+                    logger.info("Card Number: " + card.getCardNumber());
+                    logger.info("Expiration Date: " + card.getExpirationDate());
                 }
-
+                List<Loan> loans = account.getLoan();
                 for (Loan loan : loans) {
-                    Long loanId = loan.getId();
-                    Double loanAmount = loan.getLoanAmount();
-                    Double interestRate = loan.getInterestRate();
-                    String loanDuration = loan.getLoanDuration();
-
-                    logger.info("Loan ID: " + loanId);
-                    logger.info("Loan Amount: " + loanAmount);
-                    logger.info("Interest Rate: " + interestRate);
-                    logger.info("Loan Duration: " + loanDuration);
+                    logger.info("Loan ID: " + loan.getId());
+                    logger.info("Loan Amount: " +loan.getLoanAmount());
+                    logger.info("Interest Rate: " + loan.getInterestRate());
+                    logger.info("Loan Duration: " + loan.getLoanDuration());
                 }
             }
-            }catch(JAXBException e){
-                logger.error("Error");
+            }catch( JAXBException e){
+                logger.error("Error occurred",e);
             }
             return customer;
-
         }
     }

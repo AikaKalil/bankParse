@@ -3,29 +3,30 @@ package com.laba.solvd.bank.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-
 import javax.xml.bind.annotation.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 @JsonRootName("customer")
-@XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement(name="customer")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Customer {
-    @XmlAttribute
+    @XmlAttribute(name="id")
     private Long id;
     @XmlElement
     private String firstName;
     @XmlElement
     private String lastName;
-    @JsonProperty("account")
+    @JsonProperty("accounts")
     @XmlElementWrapper(name = "accounts")
     @XmlElement(name = "account")
-    private List<Account> account;
+    private List<Account> accounts;
 
     @JsonProperty("appointment")
     @XmlElementWrapper(name = "appointments")
     @XmlElement(name = "appointment")
-    private List<Appointment> appointment;
+    private List<Appointment> appointments;
 
     public Customer() {
 
@@ -61,19 +62,19 @@ public class Customer {
     }
 
     public List<Account> getAccount() {
-        return account;
+        return accounts;
     }
 
-    public void setAccount(List<Account> account) {
-        this.account = account;
+    public void setAccount(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public List<Appointment> getAppointment() {
-        return appointment;
+        return appointments;
     }
 
-    public void setAppointment(List<Appointment> appointment) {
-        this.appointment = appointment;
+    public void setAppointment(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     @Override
@@ -88,12 +89,12 @@ public class Customer {
         return id == customer.id &&
                 Objects.equals(firstName, customer.firstName) &&
                 Objects.equals(lastName, customer.lastName) &&
-                Objects.equals(account, customer.account) &&
-                Objects.equals(appointment, customer.appointment);
+                Objects.equals(accounts, customer.accounts) &&
+                Objects.equals(appointments, customer.appointments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, account, appointment);
+        return Objects.hash(id, firstName, lastName, accounts, appointments);
     }
 }

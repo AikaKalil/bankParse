@@ -1,21 +1,9 @@
 package com.laba.solvd.bank.model;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.laba.solvd.bank.parsers.DateAdapter;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 import java.util.Objects;
 
 public class Appointment {
-    @JsonProperty("id")
-    @XmlAttribute
     private Long id;
-    @JsonProperty("dateTime")
-    @XmlAttribute
-    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date dateTime;
 
     public Appointment() {

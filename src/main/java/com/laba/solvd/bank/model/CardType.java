@@ -1,12 +1,21 @@
 package com.laba.solvd.bank.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.*;
 import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "cardType")
 public class CardType {
+    @XmlAttribute(name="id")
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("credit")
+    @XmlElement
     private String credit;
+    @XmlElement
+    @JsonProperty("debit")
     private String debit;
 
 

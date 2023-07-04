@@ -1,13 +1,13 @@
-<customer>
-    <id>1</id>
+<?xml version="1.0" encoding="UTF-8"?>
+<customer id="1">
     <firstName>Aisha</firstName>
     <lastName>Murat</lastName>
-    <account>
-        <id>1</id>
+    <accounts>
+        <account id="1">
         <accountType>Checking</accountType>
         <balance>1000.0</balance>
-        <transaction>
-            <id>1</id>
+        <transactions>
+            <transaction id="1">
             <transactionType>Deposit</transactionType>
             <amount>500.0</amount>
             <transactionDate>2022-01-01T10:00:00Z</transactionDate>
@@ -18,21 +18,26 @@
             <amount>200.0</amount>
             <transactionDate>2022-02-01T14:30:00Z</transactionDate>
         </transaction>
-        <card>
-            <id>1</id>
+        </transactions>
+        <cards>
+            <card id="1">
             <cardNumber>1234567890</cardNumber>
             <expirationDate>2023-12-31T23:59:59Z</expirationDate>
             <cardType>
-                <id>1</id>
+                <cardType id="1">
                 <credit>Visa</credit>
                 <debit>Visa</debit>
             </cardType>
+            </cardType>
         </card>
-        <loan>
-            <id>1</id>
+        </cards>
+        <loans>
+            <loan id="1">
             <loanAmount>5000.0</loanAmount>
             <interestRate>22.4</interestRate>
             <loanDuration>12 Month</loanDuration>
         </loan>
+        </loans>
     </account>
+    </accounts>
 </customer>
